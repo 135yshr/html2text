@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
@@ -55,7 +56,13 @@ func extractElements(doc *goquery.Document) []Element {
 }
 
 func main() {
-	url := "https://www.example.com" // Replace with your target URL
+	flag.Parse()
+
+	url := flag.Arg(0)
+	if url == "" {
+		fmt.Println("Usage: h2j <url>")
+		return
+	}
 
 	doc, err := fetchHTML(url)
 	if err != nil {
